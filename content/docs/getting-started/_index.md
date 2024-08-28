@@ -16,7 +16,7 @@ But first, let's install the Gobs to your project.
 ## Installation
 
 ```bash
-go get github.com/xarest/gobs
+go get github.com/traphamxuan/gobs
 ```
 
 ## Quick start

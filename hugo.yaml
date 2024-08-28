@@ -24,7 +24,7 @@ menu:
         type: search
     - name: GitHub
       weight: 5
-      url: "https://github.com/xarest/gobs"
+      url: "https://github.com/traphamxuan/gobs"
       params:
         icon: github
 
