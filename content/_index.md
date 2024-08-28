@@ -19,7 +19,7 @@ wide = 100
 
 ## What is Gobs?
 
-Gobs is the framework optimizing boot sequence of large applications written in Golang. With Gobs, developers can scale their application logics easily wihtout caring about the dependencies and life-cylces of the services at booting stage.
+Gobs is the framework optimizing boot sequence of large applications written in Golang. With Gobs, developers can scale their application logics easily without caring about the dependencies and life-cylces of the services at booting stage.
 
 ## Why Gobs?
 

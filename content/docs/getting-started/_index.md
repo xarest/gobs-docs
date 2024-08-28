@@ -8,8 +8,8 @@ weight = 100
 ## Introduction
 
 Gobs control how an application will start. It manage all service instances in 5 life-cycles: `init`, `setup`, `start`, `stop`. For these characteristics, we need to know:
-1. [How to create and run the Gobs](/docs/getting-started/create-run-gobs)
-1. [How to setup a service instance and put to gobs](/docs/getting-started/build-gobs-service)
+1. [How to create and run the Gobs](/docs/getting-started/gobs-instance)
+1. [How to setup a service instance and put to gobs](/docs/getting-started/gobs-service)
 
 But first, let's install the Gobs to your project.
 
