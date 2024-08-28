@@ -5,7 +5,7 @@ draft = false
 weight = 1
 +++
 
-```golang
+```go {style=tokyonight-night}
 type ServiceLifeCycle struct {
 	Deps        Dependencies
 	ExtraDeps   []CustomService
@@ -17,7 +17,7 @@ type ServiceLifeCycle struct {
 1. `Deps Dependencies`: List of services that the service is depended on
 
 Example:
-```golang
+```go {style=tokyonight-night,filename=api.go}
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{
     Deps: []interface{
@@ -30,7 +30,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 2. `ExtraDeps []CustomService`: List of services inform of extra information. It is used to make the service depend on the other services which are not the same with the ones existed in the gobs.
 
 Example: API requires 2 independent instances of Log and Config without reuse the instances which are commonly shared in the gobs
-```golang
+```go {style=tokyonight-night,filename=api.go}
 import gCommon "github.com/traphamxuan/gobs/common"
 
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
@@ -52,7 +52,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 3. `AsyncMode`: Define stages of a service work in async mode. It is useful to not pending other services when this service is waiting for another processes.
 
 Example: API has `Start` method which should run in async mode. This configuration will help other instannces who does not depend on API can run without waiting for API to finish the `Start` stage.
-```golang
+```go {style=tokyonight-night,filename=api.go}
 import gCommon "github.com/traphamxuan/gobs/common"
 
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
@@ -66,7 +66,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 4. `AfterInit`: Callback after `Init` of service run successfully, when all of its dependencies are ready to be injected. Usually used for filling internal fields of Service struct
 
 Example: API depends on log & config instances. When both of them finish `init` step, `AfterInit` of API is called to load those instances into API instance.
-```golang
+```go {style=tokyonight-night,filename=api.go}
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{
     Deps: []interface{
@@ -84,7 +84,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 5. `OnInterrupt`: Callback when gobs is interrupted at `start` state and it is going to be stopped. This callback is critical thus logic inside must be execute as quick as possible. Don't try any blocking execution inside this method
 
 Example: Log will show warning when a signal interrupt gobs
-```golang
+```go {style=tokyonight-night,filename=log.go}
 func (l *Log) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{
     OnInterrupt: func(ctx context.Context, reasons []int) {

@@ -30,42 +30,35 @@ Each stage has specific responsibilities in bootstrap an service.
 ### Initialization
 
 The `Init` of services are called when `gobs.Init(ctx)` is called. 
-```golang
+```go {style=tokyonight-night,filename=api.go}
 var _ gobs.InitService = (*API)(nil)
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{}, nil
 }
-
-// In main bootstrap
-bs.Init(ctx)
 ```
 The main function of `Init` of a service is to configure the dependencies of a service. The detail of configuration is in [`ServiceLifeCycle`](/docs/reference/service/service-life-cycle) struct
 
 ### Setup
 
 The `Setup` of services are called when `gobs.Setup(ctx)` is called.
-```golang
+```go {style=tokyonight-night,filename=api.go}
 var _ gobs.SetupService = (*API)(nil)
 func (a *API) Setup(ctx context.Context) (error) {
   return nil
 }
 
-// In main bootstrap
-bs.Setup(ctx)
 ```
 If the `Setup` return any error, all other `Setup` of services which is pending will be rejected.
 
 ### Start
 
 The `Start` of services are called when `gobs.Start(ctx)` is called.
-```golang
+```go {style=tokyonight-night,filename=api.go}
 var _ gobs.StartService = (*API)(nil)
 func (a *API) Start(ctx context.Context) (error) {
   return nil
 }
 
-// In main bootstrap
-bs.Start(ctx)
 ```
 If the `Start` return any error, all other `Start` of services which is pending will be rejected.
 {{< callout type="warning" >}}
@@ -74,14 +67,12 @@ If the `Start` return any error, all other `Start` of services which is pending 
 
 ### Stop
 The `Stop` of services are called when `gobs.Stop(ctx)` is called.
-```golang
+```go {style=tokyonight-night,filename=api.go}
 var _ gobs.StopService = (*API)(nil)
 func (a *API) Stop(ctx context.Context) {
   return
 }
 
-// In main bootstrap
-bs.Stop(ctx)
 ```
 {{< callout type="info" >}}
   Even if the `Stop` of a service fails, Gobs will try to process to the end

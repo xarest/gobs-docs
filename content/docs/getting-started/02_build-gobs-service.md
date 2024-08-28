@@ -14,7 +14,7 @@ Initialization stage is used for setting up dependencies of a service.
 
 {{< tabs items="Quick,Common,Advanced" >}}
 {{< tab >}}
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -28,7 +28,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 ```
 {{< /tab >}}
 {{< tab >}}
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -50,7 +50,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 ```
 {{< /tab >}}
 {{< tab >}}
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -86,7 +86,7 @@ All next stages of `API` service will follow the dependencies set up at `init` s
 
 Setup stage is used for configuring of a service before starting.
 
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -110,7 +110,7 @@ When API implements method `Setup` like `gobs.SetupService`, gobs will manage to
 
 Start stage is used for running main process of a service.
 
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -136,7 +136,7 @@ When API implements method `Start` like `gobs.StartService`, gobs will manage to
 
 Start stage is used to do the last execution and release resources before existing the application.
 
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -156,7 +156,7 @@ func (a *API) Stop(ctx context.Context) {
 {{< /callout >}}
 
 ### Complete
-```golang
+```go {style=tokyonight-night}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -188,7 +188,7 @@ func (a *API) Stop(ctx context.Context) {
 
 ## Bonus
 If your service is simple you can ignore `Init` method and setup your instance as common pattern below
-```golang
+```go {style=tokyonight-night,filename=api.go}
 type API struct {
   log *log.Log
   cfg *conf.Config
@@ -221,7 +221,7 @@ func (a *API) Stop(ctx context.Context) {
 ```
 
 Then the creation of gobs instance will be
-```golang
+```go {style=tokyonight-night,filename=main.go}
 func main() {
   ctx := context.Background()
   bs := gobs.NewBootstrap()

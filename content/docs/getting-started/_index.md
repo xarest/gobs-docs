@@ -22,34 +22,33 @@ go get github.com/traphamxuan/gobs
 ## Quick start
 
 
-```golang
+```go {style=tokyonight-night,filename=main.go}
 package main
 
 import (
-  "context"
-	"syscall"
+	"context"
+	"fmt"
 
 	"github.com/traphamxuan/gobs"
-	gUtils "github.com/traphamxuan/gobs/utils"
 )
 
-type API struct {}
+type API struct{}
 
 func (a *API) Start(ctx context.Context) error {
-  fmt.Println("API started")
-  return nil
+	fmt.Println("API started")
+	return nil
 }
 
 func (a *API) Stop(ctx context.Context) error {
-  fmt.Println("API stopped")
-  return nil
+	fmt.Println("API stopped")
+	return nil
 }
 
 func main() {
-  ctx := context.Background()
-  bs := gobs.NewBootstrap()
-  bs.AddOrPanic(&API{})
-  bs.Start(ctx)
+	ctx := context.Background()
+	bs := gobs.NewBootstrap()
+	bs.AddOrPanic(&API{})
+	bs.Start(ctx)
 }
 ```
 The output of the program
