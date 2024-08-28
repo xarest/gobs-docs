@@ -1,7 +1,7 @@
 +++
 title = 'Getting started'
 date = 2024-07-13T00:33:02+07:00
-draft = true
+draft = false
 weight = 100
 +++
 
@@ -21,6 +21,7 @@ go get github.com/xarest/gobs
 
 ## Quick start
 
+
 ```golang
 package main
 
@@ -34,11 +35,26 @@ import (
 
 type API struct {}
 
+func (a *API) Start(ctx context.Context) error {
+  fmt.Println("API started")
+  return nil
+}
+
+func (a *API) Stop(ctx context.Context) error {
+  fmt.Println("API stopped")
+  return nil
+}
+
 func main() {
   ctx := context.Background()
   bs := gobs.NewBootstrap()
   bs.AddOrPanic(&API{})
-  bs.StartBootstrap(ctx)
+  bs.Start(ctx)
 }
+```
+The output of the program
+```bash
+API started
+API stopped
 ```
 For the details of each step, please go to [create and run the Gobs](/docs/getting-started/create-run-gobs)

@@ -1,8 +1,9 @@
 +++
 title = 'Build Gobs service'
 date = 2024-07-13T02:31:27+07:00
-draft = true
-weight = 2
+draft = false
+weight = 102
+slug = 'gobs-service'
 +++
 
 A service instance managed by gobs has 4 stages of its lifecycle: `init`, `setup`, `start`, `stop`. Users can optionally custom those step for particular services. Let's go to functionalities of each stages
@@ -125,7 +126,7 @@ func (a *API) Start(ctx context.Context) error {
 When API implements method `Start` like `gobs.StartService`, gobs will manage to run `a.Start` after `log.Log` and `conf.Config` finish their `Start`
 
 {{< callout type="warning" >}}
-  API will never start if `log` or `cfg` have pending without finishing `Start` method
+  API will never start if `log` or `cfg` is pending without finishing `Start` method
 {{< /callout >}}
 {{< callout type="info" >}}
   If `log.Log` or `conf.Config` failed in running `Setup`, the setup process will stop immediately and `Setup` of API won't be invoked
@@ -182,5 +183,54 @@ var _ gobs.StopService = (*API)(nil)
 func (a *API) Stop(ctx context.Context) {
   a.log.Info("API is stopped")
   a.cfg.Release()
+}
+```
+
+## Bonus
+If your service is simple you can ignore `Init` method and setup your instance as common pattern below
+```golang
+type API struct {
+  log *log.Log
+  cfg *conf.Config
+}
+
+func NewAPI(log *log.Log, cfg *conf.Config) *API {
+  return &API{
+    log: log,
+    cfg: cfg,
+  }
+}
+
+var _ gobs.SetupService = (*API)(nil)
+func (a *API) Setup(ctx context.Context) error {
+  a.log.Info("API is setup")
+  return a.cfg.Config()
+}
+
+var _ gobs.StartService = (*API)(nil)
+func (a *API) Start(ctx context.Context) error {
+  a.log.Info("API is running")
+  return a.Run()
+}
+
+var _ gobs.StopService = (*API)(nil)
+func (a *API) Stop(ctx context.Context) {
+  a.log.Info("API is stopped")
+  a.cfg.Release()
+}
+```
+
+Then the creation of gobs instance will be
+```golang
+func main() {
+  ctx := context.Background()
+  bs := gobs.NewBootstrap()
+  cfg := NewConfig()
+  log := NewLog()
+  api := NewAPI(log, cfg)
+  bs.AddOrPanic(cfg)
+  bs.AddOrPanic(log)
+  bs.AddOrPanic(api)
+  bs.Start(ctx)
 }
 ```
