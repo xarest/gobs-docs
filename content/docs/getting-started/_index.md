@@ -16,7 +16,7 @@ But first, let's install the Gobs to your project.
 ## Installation
 
 ```bash
-go get github.com/traphamxuan/gobs
+go get github.com/xarest/gobs
 ```
 
 ## Quick start
@@ -29,7 +29,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/traphamxuan/gobs"
+	"github.com/xarest/gobs"
 )
 
 type API struct{}

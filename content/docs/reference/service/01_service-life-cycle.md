@@ -31,7 +31,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 
 Example: API requires 2 independent instances of Log and Config without reuse the instances which are commonly shared in the gobs
 ```go {style=tokyonight-night,filename=api.go}
-import gCommon "github.com/traphamxuan/gobs/common"
+import gCommon "github.com/xarest/gobs/common"
 
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{
@@ -53,7 +53,7 @@ func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 
 Example: API has `Start` method which should run in async mode. This configuration will help other instannces who does not depend on API can run without waiting for API to finish the `Start` stage.
 ```go {style=tokyonight-night,filename=api.go}
-import gCommon "github.com/traphamxuan/gobs/common"
+import gCommon "github.com/xarest/gobs/common"
 
 func (a *API) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
   return &gobs.ServiceLifeCycle{
