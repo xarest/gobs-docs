@@ -23,7 +23,35 @@ Gobs is the framework optimizing boot sequence of large applications written in 
 
 ## Why Gobs?
 
-Gobs provides:
+Golang is commonly used for micro-services. Each of them is a separated module working independently. This approach creates a barrier preventing Golang from the big applications with complicated features. Go is easy to maintain as small module. When the application grows bigger application based on Go will get some obstacles:
+
+#### Long-scripts for initialization
+When the application has been integrated with numerous features, this snippet is commonly going be lengthy.
+```go {style=tokyonight-night}
+	logger := logger.NewLogger(env)
+	if err != nil {
+		return err
+	}
+	o := orm.NewOrm(ctx, dbInfo, s.Logger, s.SStore)
+	if err != nil {
+		return err
+	}
+	engine := gin.Default()
+	mw := middleware.NewMiddleware(o, rd, logger, sim)
+	buildHandler := builder.NewBuilder(base, o)
+	gameHandler := game.NewGame(base, sim)
+	profileHandler := profile.NewProfile(base)
+```
+They require various style to handle the initialization steps which makes the code messy. Additionaly, handling and transfering the instances which have been created to the other initializations is another challenge that prevents the application from growing bigger.
+
+#### Time connsuming on bootstrap the application
+In the snippet in previous [section](#long-scripts-for-initialization), although Go supports greatly concurrent processes, the initial steps is simply a lengthy script. Some intial steps may not relate to each others but they have to wait. If Go is the main part of a big application, the bootstrap requires numerous services will take lots of time.
+
+#### Defined states when the app is interrupted by external events
+With the manual management for all instances created in previous [section](#long-scripts-for-initialization), all instances do not have proper processing for every events happen to the application. For example, router framework (gin, echo) can have safe shutting down to help a request finish before closing the server. Meanwhile, there are no safe place for sqs, s3, redis, db to close the connection and tell those services to relelase the resources taken by Go application at the begining.
+Event worse, defining a task to re-load redis before going live is another challenge for bootstrap time when the application had been shutdown accidentally before
+
+## How Gobs solve the problem?
 
 #### **Fast booting sequence**
 
