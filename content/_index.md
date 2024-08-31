@@ -9,6 +9,9 @@ wide = 100
 
 ##  Manage complex project structure with GoBs
 
+> All service instances only work when their dependencies are ready.
+> All service instances onnly stop when the ones depends on them are finished.
+
 {{< cards >}}
   {{< card link="#fast-booting-sequence" title="Fast" icon="rocket" subtitle="Gobs optimizes booting flows via multi-threading. All services will start immediately when their dependencies are ready" >}}
   {{< card link="#warranty-application-life-cycles" title="Safe" icon="guard" subtitle="Gobs resolves dependencies between services by producer-consumer pattern. All services will be ordered so that system is always finite states">}}
