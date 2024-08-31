@@ -48,7 +48,7 @@ They require various style to handle the initialization steps which makes the co
 In the snippet in previous [section](#long-scripts-for-initialization), although Go supports greatly concurrent processes, the initial steps is simply a lengthy script. Some intial steps may not relate to each others but they have to wait. If Go is the main part of a big application, the bootstrap requires numerous services will take lots of time.
 
 #### Defined states when the app is interrupted by external events
-With the manual management for all instances created in previous [section](#long-scripts-for-initialization), all instances do not have proper processing for every events happen to the application. For example, router framework (gin, echo) can have safe shutting down to help a request finish before closing the server. Meanwhile, there are no safe place for sqs, s3, redis, db to close the connection and tell those services to relelase the resources taken by Go application at the begining.
+With the manual management for all instances created in previous [section](#long-scripts-for-initialization), all instances do not have proper processing for every events happen to the application. For example, router framework (gin, echo) can have safe shutting down to help a request finish before closing the server. Meanwhile, there are no safe place for sqs, s3, redis, db to close the connection and tell those services to release the resources taken by Go application at the begining.
 Event worse, defining a task to re-load redis before going live is another challenge for bootstrap time when the application had been shutdown accidentally before
 
 ## How Gobs solve the problem?
