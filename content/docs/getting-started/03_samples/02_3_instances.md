@@ -9,6 +9,8 @@ slug = '3-instances'
 # Sample
 At repository: https://github.com/xarest/gobs/tree/main/samples/3_instances
 
+The sample describe the usages to initiate and run 3 separate instances using gobs to manage their life-cycles.
+
 {{< tabs items="A,B,C" >}}
 {{< tab >}}
 ```go {style=tokyonight-night,filename=a.go}

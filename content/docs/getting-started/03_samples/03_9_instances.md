@@ -1,20 +1,21 @@
 +++
-title = 'Complex dependencies with blocked execution'
+title = '9-instances with dependecies'
 date = 2024-07-13T02:31:50+07:00
 draft = false
-weight = 154
-slug = 'complex-deps-async'
+weight = 153
+slug = '9-instances'
 +++
 
 # Sample
 At repository: https://github.com/xarest/gobs/tree/main/samples/9_instances
 
-`S6`, `S7`, `S9`, `S10`, `S13` are the servvices contain asynchronous processes in `Setup` and `Stop`
+The sample describe the usages to initiate and run 9 instances related with each others using gobs to manage their life-cycles and arrange to bootstrap in correct order.
 
-![](gobs-run-13-instances-async.gif "Flow of init/setup/start/stop service instances using Gobs")
+![](gobs-run-13-instances.gif "Flow of init/setup/start/stop service instances using Gobs")
+
 
 ## Services
-{{< tabs items="S1,S2,S3,S4,S5,S6*,S7*,S8,S9*,S10*,S11,S12,S13*" >}}
+{{< tabs items="S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13" >}}
 {{< tab >}}
 ```go {style=tokyonight-night}
 package services
@@ -283,10 +284,8 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/xarest/gobs"
-	"github.com/xarest/gobs/common"
 )
 
 type S6 struct {
@@ -300,17 +299,12 @@ func (s *S6) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 	fmt.Println("S6 init")
 	return &gobs.ServiceLifeCycle{
 		Deps: gobs.Dependencies{new(S10), new(S11)},
-		AsyncMode: map[common.ServiceStatus]bool{
-			common.StatusSetup: true,
-			common.StatusStop:  true,
-		},
 	}, nil
 }
 
 var _ gobs.IServiceSetup = (*S6)(nil)
 
 func (s *S6) Setup(ctx context.Context, deps gobs.Dependencies) error {
-	time.Sleep(30 * time.Millisecond)
 	fmt.Println("S6 setup")
 	if err := deps.Assign(&s.s10, &s.s11); err != nil {
 		fmt.Println("Failed to assign dependencies", err)
@@ -329,7 +323,6 @@ func (s *S6) Start(ctx context.Context) error {
 var _ gobs.IServiceStop = (*S6)(nil)
 
 func (s *S6) Stop(ctx context.Context) error {
-	time.Sleep(30 * time.Millisecond)
 	fmt.Println("S6 stop")
 	return nil
 }
@@ -343,10 +336,8 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/xarest/gobs"
-	"github.com/xarest/gobs/common"
 )
 
 type S7 struct {
@@ -359,17 +350,12 @@ func (s *S7) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 	fmt.Println("S7 init")
 	return &gobs.ServiceLifeCycle{
 		Deps: gobs.Dependencies{new(S12)},
-		AsyncMode: map[common.ServiceStatus]bool{
-			common.StatusSetup: true,
-			common.StatusStop:  true,
-		},
 	}, nil
 }
 
 var _ gobs.IServiceSetup = (*S7)(nil)
 
 func (s *S7) Setup(ctx context.Context, deps gobs.Dependencies) error {
-	time.Sleep(50 * time.Millisecond)
 	fmt.Println("S7 setup")
 	if err := deps.Assign(&s.s12); err != nil {
 		fmt.Println("Failed to assign dependencies", err)
@@ -388,7 +374,6 @@ func (s *S7) Start(ctx context.Context) error {
 var _ gobs.IServiceStop = (*S7)(nil)
 
 func (s *S7) Stop(ctx context.Context) error {
-	time.Sleep(50 * time.Millisecond)
 	fmt.Println("S7 stop")
 	return nil
 }
@@ -453,10 +438,8 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/xarest/gobs"
-	"github.com/xarest/gobs/common"
 )
 
 type S9 struct{}
@@ -465,18 +448,12 @@ var _ gobs.IServiceInit = (*S9)(nil)
 
 func (s *S9) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 	fmt.Println("S9 init")
-	return &gobs.ServiceLifeCycle{
-		AsyncMode: map[common.ServiceStatus]bool{
-			common.StatusSetup: true,
-			common.StatusStop:  true,
-		},
-	}, nil
+	return nil, nil
 }
 
 var _ gobs.IServiceSetup = (*S9)(nil)
 
 func (s *S9) Setup(ctx context.Context, deps gobs.Dependencies) error {
-	time.Sleep(100 * time.Millisecond)
 	fmt.Println("S9 setup")
 
 	return nil
@@ -492,10 +469,10 @@ func (s *S9) Start(ctx context.Context) error {
 var _ gobs.IServiceStop = (*S9)(nil)
 
 func (s *S9) Stop(ctx context.Context) error {
-	time.Sleep(100 * time.Millisecond)
 	fmt.Println("S9 stop")
 	return nil
 }
+
 ```
 {{< /tab >}}
 {{< tab >}}
@@ -505,10 +482,8 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/xarest/gobs"
-	"github.com/xarest/gobs/common"
 )
 
 type S10 struct{}
@@ -517,18 +492,12 @@ var _ gobs.IServiceInit = (*S10)(nil)
 
 func (s *S10) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 	fmt.Println("S10 init")
-	return &gobs.ServiceLifeCycle{
-		AsyncMode: map[common.ServiceStatus]bool{
-			common.StatusSetup: true,
-			common.StatusStop:  true,
-		},
-	}, nil
+	return nil, nil
 }
 
 var _ gobs.IServiceSetup = (*S10)(nil)
 
 func (s *S10) Setup(ctx context.Context, deps gobs.Dependencies) error {
-	time.Sleep(60 * time.Millisecond)
 	fmt.Println("S10 setup")
 
 	return nil
@@ -544,7 +513,6 @@ func (s *S10) Start(ctx context.Context) error {
 var _ gobs.IServiceStop = (*S10)(nil)
 
 func (s *S10) Stop(ctx context.Context) error {
-	time.Sleep(60 * time.Millisecond)
 	fmt.Println("S10 stop")
 	return nil
 }
@@ -646,10 +614,8 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/xarest/gobs"
-	"github.com/xarest/gobs/common"
 )
 
 type S13 struct{}
@@ -658,18 +624,12 @@ var _ gobs.IServiceInit = (*S13)(nil)
 
 func (s *S13) Init(ctx context.Context) (*gobs.ServiceLifeCycle, error) {
 	fmt.Println("S13 init")
-	return &gobs.ServiceLifeCycle{
-		AsyncMode: map[common.ServiceStatus]bool{
-			common.StatusSetup: true,
-			common.StatusStop:  true,
-		},
-	}, nil
+	return nil, nil
 }
 
 var _ gobs.IServiceSetup = (*S13)(nil)
 
 func (s *S13) Setup(ctx context.Context, deps gobs.Dependencies) error {
-	time.Sleep(30 * time.Millisecond)
 	fmt.Println("S13 setup")
 
 	return nil
@@ -728,32 +688,32 @@ S11 init
 S12 init
 S13 init
 
+S9 setup
+S10 setup
 S11 setup
 S12 setup
 S13 setup
-S8 setup
-S7 setup
-S10 setup
-S6 setup
-S3 setup
-S9 setup
 S4 setup
 S5 setup
+S6 setup
+S7 setup
+S8 setup
 S2 setup
+S3 setup
 S1 setup
 
+S9 start
+S10 start
 S11 start
 S12 start
 S13 start
-S10 start
-S9 start
-S7 start
-S8 start
-S6 start
 S4 start
 S5 start
-S3 start
+S6 start
+S7 start
+S8 start
 S2 start
+S3 start
 S1 start
 
 S1 stop
@@ -761,12 +721,12 @@ S2 stop
 S3 stop
 S4 stop
 S5 stop
-S8 stop
-S13 stop
 S6 stop
-S11 stop
 S7 stop
-S12 stop
-S10 stop
+S8 stop
 S9 stop
+S10 stop
+S11 stop
+S12 stop
+S13 stop
 ```

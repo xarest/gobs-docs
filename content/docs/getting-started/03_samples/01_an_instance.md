@@ -9,6 +9,8 @@ slug = '1-instance'
 # Sample
 At repository: https://github.com/xarest/gobs/tree/main/samples/1_instance
 
+The sample describe the basic usage to initiate and run an instance using gobs.
+
 ```go {style=tokyonight-night,filename=service.go}
 package main
 
