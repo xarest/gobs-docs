@@ -13,6 +13,9 @@ The sample describe the usages to initiate and run 9 instances related with each
 
 `S6`, `S7`, `S9`, `S10`, `S13` are the servvices contain asynchronous processes in `Setup` and `Stop`
 
+> - All service instances only work when their dependencies are ready.
+> - All service instances only stop when the ones depends on them are finished.
+
 ![](gobs-run-13-instances-async.gif "Flow of init/setup/start/stop service instances using Gobs")
 
 ## Services
