@@ -60,4 +60,4 @@ The output of the program
 API started
 API stopped
 ```
-For the details of each step, please go to [create and run the Gobs](/docs/getting-started/create-run-gobs)
+For the details of each step, please go to [create and run the Gobs](/docs/getting-started/gobs-instance)
