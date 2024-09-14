@@ -19,7 +19,6 @@ wide = 100
   {{< card link="#light-weight-libraries" title="Flexible" icon="flexible" subtitle="Compatible with almost routing framework such as gin, echo, fiber" >}}
 {{< /cards >}}
 
-
 ## What is Gobs?
 
 Gobs is the framework optimizing boot sequence of large applications written in Golang. With Gobs, developers can scale their application logics easily without caring about the dependencies and life-cylces of the services at booting stage.
@@ -55,6 +54,8 @@ With the manual management for all instances created in previous [section](#long
 Event worse, defining a task to re-load redis before going live is another challenge for bootstrap time when the application had been shutdown accidentally before
 
 ## How Gobs solve the problem?
+
+!["Gobs bootstrap"](https://raw.githubusercontent.com/xarest/gobs-docs/2b45a24e23ef25d50b1859dba807f2630418cd01/content/docs/getting-started/03_samples/gobs-run-13-instances-async.gif "How gobs start an application with multiple instances")
 
 #### **Fast booting sequence**
 
