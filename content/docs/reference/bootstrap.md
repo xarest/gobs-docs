@@ -58,11 +58,22 @@ bs.AddOrPanic(&log.Log{}) // The key is myapp/log.Log
 ```
 This is the default name that gobs uses to identify the instances it found in dependencies in `Init()` of the [ServiceLifeCycle](../service/01_service-life-cycle/).
 
-
 #### Build bringup schedule
 When `bs.Init()` called, gobs will invoke `Init()` of all instances added into gobs. If the `Init()` in the instance return dependencies, gobs will keep going until all instances are in order.
 
-### Setup() & Start()
+### Setup()
+Calling `Setup()` of gobs will start running all `Setup()` in service instances. This method may take time to complete and requires goroutine. Thus the best practice is putting this process in the background so that the main context can handle following external or internal signals
+```go {style=tokyonight-night}
+go func(ctx context.Context) {
+  if err := bs.Setup(ctx); err != nil {
+    return err
+  }
+  // Handle error here
+}(ctx)
+// Waiting for interrupt signals here
+```
+### Start()
+Calling `Start()` of gobs will start running all `Start()` and `StartServer()` in service instances. This method may take time to complete 
 ### Interrupt()
 ### Stop()
 ### StartBootstrap()
