@@ -13,7 +13,7 @@ Note that this step is just making the definitions for those components in order
 
 Gobs manages resources of the applicaiton by an instance from `gobs.NewBootstrap()`. A typical application generally requires only a single instance of gobs. If you application is complex, various instances can be used to manage multiple processes at the same time.
 
-The initialization may accept some [configurations](../configuration/) to define the way gobs will run.
+The initialization may accept some [configurations](../../configuration/) to define the way gobs will run.
 
 ```go {style=tokyonight-night,filename=single.go}
 bs := gobs.NewBootstrap()
