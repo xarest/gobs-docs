@@ -1,9 +1,15 @@
 +++
 title = 'Init'
 date = 2024-07-13T02:34:23+07:00
-draft = true
+draft = false
 weight = 221
 +++
+
+Initialization of Go application is the first step to define what components that the application will have. For example, most of applications must have log and configuration loader.
+
+Note that this step is just making the definitions for those components in order to set up a boot up plan. No blocking action happens. The external signals to stop the application won't be available at this step.
+
+## Using Gobs to manage the initialization
 
 Gobs manages resources of the applicaiton by an instance from `gobs.NewBootstrap()`. A typical application generally requires only a single instance of gobs. If you application is complex, various instances can be used to manage multiple processes at the same time.
 

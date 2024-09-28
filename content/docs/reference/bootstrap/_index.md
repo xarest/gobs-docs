@@ -1,7 +1,7 @@
 +++
 title = 'Bootstrap'
 date = 2024-09-28T02:34:02+07:00
-draft = true
+draft = false
 weight = 220
 +++
 
