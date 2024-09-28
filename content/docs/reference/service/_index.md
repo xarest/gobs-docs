@@ -2,7 +2,7 @@
 title = 'Service'
 date = 2024-07-13T02:34:02+07:00
 draft = false
-weight = 1
+weight = 210
 +++
 
 Services in Gobs are `any` instances. All services will go through some stages as its life-cycles. The default life-cycles from gobs bootstrap follow the digram below:

@@ -1,8 +1,8 @@
 +++
-title = 'Bootstrap'
+title = 'Init'
 date = 2024-07-13T02:34:23+07:00
 draft = true
-weight = 2
+weight = 221
 +++
 
 Gobs manages resources of the applicaiton by an instance from `gobs.NewBootstrap()`. A typical application generally requires only a single instance of gobs. If you application is complex, various instances can be used to manage multiple processes at the same time.
@@ -60,20 +60,3 @@ This is the default name that gobs uses to identify the instances it found in de
 
 #### Build bringup schedule
 When `bs.Init()` called, gobs will invoke `Init()` of all instances added into gobs. If the `Init()` in the instance return dependencies, gobs will keep going until all instances are in order.
-
-### Setup()
-Calling `Setup()` of gobs will start running all `Setup()` in service instances. This method may take time to complete and requires goroutine. Thus the best practice is putting this process in the background so that the main context can handle following external or internal signals
-```go {style=tokyonight-night}
-go func(ctx context.Context) {
-  if err := bs.Setup(ctx); err != nil {
-    return err
-  }
-  // Handle error here
-}(ctx)
-// Waiting for interrupt signals here
-```
-### Start()
-Calling `Start()` of gobs will start running all `Start()` and `StartServer()` in service instances. This method may take time to complete 
-### Interrupt()
-### Stop()
-### StartBootstrap()
